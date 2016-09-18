@@ -1,8 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.forms import formset_factory
 from django.contrib.auth.decorators import login_required
+from django.db import transaction
+from django.core.exceptions import ObjectDoesNotExist
 from . import forms
 from . import models
+import random
 
 @login_required
 def add_dish(request):
@@ -45,3 +48,18 @@ def dish_detail(request, pk):
     dish = get_object_or_404(models.Dish, pk=pk)
     context = {'dish': dish}
     return render(request, 'meals/dish.html', context)
+
+@transaction.atomic
+def seven_meals(request):
+
+    count = models.Dish.objects.count()
+    random_numbers = [random.randrange(1,count+1) for x in range(7)]
+    dish = []
+    for number in random_numbers:
+        try:
+            dish.append(models.Dish.objects.get(pk=number))
+        except ObjectDoesNotExist:
+            dish.append(models.Dish.objects.get(pk=random.randrange(1,count+1)))
+
+    contex = {'meals': dish}
+    return render(request, 'meals/7meals.html', contex) 
