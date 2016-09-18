@@ -4,12 +4,13 @@ from django.db import models
 class Dish(models.Model):
     name = models.CharField(max_length=30)
     author = models.CharField(max_length=30)
-    picture = models.ImageField(upload_to='media/dish_pictures/', blank=True, null=True)
+    recipe = models.CharField(max_length=10000)
+    picture = models.ImageField(upload_to='dish_pictures/', blank=True, null=True)
 
-class Ingredients(models.Model):
+class Ingredient(models.Model):
     dish = models.ForeignKey(Dish)
     name = models.CharField(max_length=30)
-    ammount = models.FloatField()
+    amount = models.FloatField()
     UNIT = (
         ('kg', 'kg'),
         ('g', 'g'),
