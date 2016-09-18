@@ -1,0 +1,26 @@
+<html><head><link rel="stylesheet" href="../static/css/webeat.css"></head><body>{% extends '__base.html' %} {% block content %}
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">Shall we see what's for dinner today?</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                
+            <p class="text-center">
+                    <a href="#">Get your 7 meals</a>
+                </p></div>
+            <div class="col-md-6">
+                
+            <p class="text-center">
+                    <a href="{% url 'meals:add_dish' %}">Add a dish</a>
+                </p></div>
+        </div>
+    </div>
+</div>{% endblock %}</body></html>

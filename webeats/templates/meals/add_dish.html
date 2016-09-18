@@ -1,0 +1,54 @@
+{% extends '__base.html' %}
+
+{% block content %}
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="control-label">Dish</label>
+        {{ dish_form.name }}
+        {% if dish_form.name.errors %}
+            {% for error in dish_from.name.errors %}
+                {{ error|escape }}
+            {% endfor %}
+        {% endif %}
+        <label>Picture</label>
+        {{ dish_form.picture }}
+        {% if dish_form.picture.errors %}
+            {% for error in dish_from.picture.errors %}
+                {{ error|escape }}
+            {% endfor %}
+        {% endif %}
+        
+        {{ ingredient_formset.management_form }}
+        {% for ingredient_form in ingredient_formset %}
+            <div class='ingredient-formset'>
+                {{ ingredient_form.name }}
+                {% if ingredient_form.name.errors %}
+                    {% for error in ingredient_form.name.errors %}
+                        {{ error|escape }}
+                    {% endfor %}
+                {% endif %}
+                
+                {{ ingredient_form.amount }}
+                {% if ingredient_form.amount.errors %}
+                    {% for error in ingredient_form.amount.errors %}
+                        {{ error|escape }}
+                    {% endfor %}
+                {% endif %}
+                
+                {{ ingredient_form.unit }}
+                {% if ingredient_form.unit.errors %}
+                    {% for error in ingredient_form.unit.errors %}
+                        {{ error|escape }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endfor %}
+        <input type="submit" value="Add dish" class="button"/>
+    </form>
+</div>            
+{% endblock %}
