@@ -9,18 +9,18 @@
                 <img src="{{ dish.picture.url }}" class="img-responsive" style="max-width:500px; max-height:500px">
             </div>
             <div class="col-md-6"> 
-                <h1>{{dish.name}}<small><a href="{% url 'meals:dish_update' dish.id %}">Bearbeiten</a></small></h1>
+                <h1>{{dish.name}}<small> - <a href="{% url 'meals:dish_update' dish.id %}">Edit</a></small></h1>
                 <div id="recipe"></div>
                 <script>
                     document.getElementById('recipe').innerHTML =
                         marked('{{ dish.recipe|escapejs }}');
                 </script>
                 <h4>Ingredients</h4>
-                <ol>
+                <ul>
                     {% for ingredient in dish.ingredient_set.all %}
-                        <li>{{ ingredient.amount }} {{ ingredient.unit }} {{ ingredient.name }}</li>
+                    <li>{{ ingredient.amount }} {{ ingredient.unit }} {{ ingredient.name }} <small>- <a href="{% url 'meals:ingredient_update' ingredient.id %}">edit</a></small></li>
                     {% endfor %}
-                </ol>
+                </ul>
             </div>
         </div>
     </div>

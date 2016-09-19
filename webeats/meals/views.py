@@ -75,13 +75,28 @@ def seven_meals(request):
 
 def dish_update(request, pk):
     dish = get_object_or_404(models.Dish, pk=pk)
-    IngredientFormset = modelformset_factory(models.Ingredient, form=forms.IngredientForm, fields=['name','amount','unit'])
-    qset = dish.ingredient_set.all()
-    ingredient_formset = IngredientFormset(queryset=qset)
     dish_form = forms.DishForm(instance=dish)
-    
+
+    if request.POST:
+        dish_form = forms.DishForm(resquest.POST)
+        dish_form.save()
+        return redirect('meals:dish', dish.pk)
+
     context = {
         'dish_form': dish_form,
-        'ingredient_formset': ingredient_formset,
          }
     return render(request, 'meals/add_dish.html', context)
+
+
+def ingredient_update(request, pk):
+    ingredient = get_object_or_404(models.Ingredient, pk=pk)
+    ingredient_form = forms.IngredientForm(instance=ingredient)
+
+    if request.POST:
+        ingredient_form = forms.IngredientForm(request.POST)
+        ingredient_form.save()
+        return redirect('meals:dish', ingredient.dish.pk)
+
+    context = {'ingredient_form': ingredient_form}
+
+    return render(request, 'meals/update_ingredienthtml', context)
