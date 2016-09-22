@@ -72,7 +72,7 @@ def seven_meals(request):
     contex = {'meals': dish}
     return render(request, 'meals/7meals.html', contex)
 
-
+@login_required
 def dish_update(request, pk):
     dish = get_object_or_404(models.Dish, pk=pk)
     dish_form = forms.DishForm(instance=dish)
@@ -88,6 +88,7 @@ def dish_update(request, pk):
     return render(request, 'meals/add_dish.html', context)
 
 
+@login_required
 def ingredient_update(request, pk):
     ingredient = get_object_or_404(models.Ingredient, pk=pk)
     ingredient_form = forms.IngredientForm(instance=ingredient)
@@ -99,4 +100,4 @@ def ingredient_update(request, pk):
 
     context = {'ingredient_form': ingredient_form}
 
-    return render(request, 'meals/update_ingredienthtml', context)
+    return render(request, 'meals/update_ingredient.html', context)
