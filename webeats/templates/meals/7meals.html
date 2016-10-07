@@ -5,7 +5,13 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <h1 class="text-center">Your 7 Meals</h1>
+            <h1 class="text-center">Your 7 Meals </h1>
+                <form method='POST' action="{% url 'meals:wrap_up' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name='meals_pk'
+                           value="{% for meal in meals %}{{meal.pk}},{% endfor %}">
+                
+                    <input type="submit" class='btn btn-link' value='Wrap it up'</a>
           </div>
         </div>
         <div class="row">

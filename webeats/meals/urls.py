@@ -16,5 +16,8 @@ urlpatterns = [
     url(r'^ingredient/(?P<pk>[\d]+)/update/$',
         views.ingredient_update,
         name='ingredient_update',),
+    url(r'^meals/wrap_up/$',
+        views.wrap_up,
+        name='wrap_up',),
 ]
 

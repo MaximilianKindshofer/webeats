@@ -101,3 +101,8 @@ def ingredient_update(request, pk):
     context = {'ingredient_form': ingredient_form}
 
     return render(request, 'meals/update_ingredient.html', context)
+
+def wrap_up(request):
+    if request.POST:
+        for pk in request.get('meals_pk')
+    return render(request, 'meals/wrap_up.html')
