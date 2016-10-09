@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import UpdateView, DeleteView
+from django.urls import reverse
 from django.forms import formset_factory, modelformset_factory
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
-from django.core.exceptions import ObjectDoesNotExist
 from . import forms
 from . import models
 import random
@@ -53,21 +53,16 @@ def dish_detail(request, pk):
 @transaction.atomic
 def seven_meals(request):
 
-    count = models.Dish.objects.count()
-    if count > 6:
-        random_numbers = []
-        while len(random_numbers) < 7:
-            random_number = random.randrange(1,count+1)
-            if random_number not in random_numbers:
-                random_numbers.append(random_number)
-    else:
-        random_numbers = [random.randrange(1,count+1) for x in range(7)]
+    count = models.Dish.objects.all().count()
     dish = []
-    for number in random_numbers:
+    while len(dish) < 7:
+        random_number = random.randrange(1, count+1)
         try:
-            dish.append(models.Dish.objects.get(pk=number))
-        except ObjectDoesNotExist:
-            dish.append(models.Dish.objects.get(pk=random.randrange(1,count+1)))
+            dish.append(models.Dish.objects.get(pk=random_number))
+        except models.Dish.DoesNotExist:
+            pass
+        
+
 
     contex = {'meals': dish}
     return render(request, 'meals/7meals.html', contex)
@@ -78,14 +73,19 @@ def dish_update(request, pk):
     dish_form = forms.DishForm(instance=dish)
 
     if request.POST:
-        dish_form = forms.DishForm(resquest.POST)
-        dish_form.save()
-        return redirect('meals:dish', dish.pk)
-
+        dish_form = forms.DishForm(request.POST)
+        if dish_form.is_valid():
+            dish_unsaved = dish_form.save(commit=False)
+            dish_unsaved.author = request.user
+            dish_unsaved.save()
+            return redirect('meals:dish_detail', dish.pk)
+        else:
+            print(dish_form.errors)
     context = {
+        'dish': dish,
         'dish_form': dish_form,
          }
-    return render(request, 'meals/add_dish.html', context)
+    return render(request, 'meals/update_dish.html', context)
 
 
 @login_required
@@ -95,9 +95,18 @@ def ingredient_update(request, pk):
 
     if request.POST:
         ingredient_form = forms.IngredientForm(request.POST)
-        ingredient_form.save()
-        return redirect('meals:dish', ingredient.dish.pk)
+        ingredient_unsaved = ingredient_form.save(commit=False)
+        ingredient_unsaved.dish = ingredient.dish
+        ingredient_unsaved.save()
+        return redirect('meals:dish_detail', ingredient.dish.pk)
 
-    context = {'ingredient_form': ingredient_form}
+    context = {'ingredient':ingredient, 'ingredient_form': ingredient_form}
 
     return render(request, 'meals/update_ingredient.html', context)
+
+class DeleteIngredient(DeleteView):
+
+    model = models.Ingredient
+    def get_success_url(self):
+        return reverse('meals:dish_detail', args=[self.object.dish.pk])
+    
