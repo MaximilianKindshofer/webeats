@@ -28,6 +28,8 @@ urlpatterns = [
     url(r'^ingredient/(?P<pk>[\d]+)/delete/$',
         views.DeleteIngredient.as_view(),
         name='ingredient_delete'),
-        
+    url(r'^meals/wrap_up/$',
+        views.wrap_up,
+        name='wrap_up',),
 ]
 

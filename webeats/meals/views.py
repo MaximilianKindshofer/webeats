@@ -110,3 +110,7 @@ class DeleteIngredient(DeleteView):
     def get_success_url(self):
         return reverse('meals:dish_detail', args=[self.object.dish.pk])
     
+def wrap_up(request):
+    if request.POST:
+        for pk in request.get('meals_pk')
+    return render(request, 'meals/wrap_up.html')
