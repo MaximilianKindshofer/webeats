@@ -1,3 +1,4 @@
+gunicorn
 Django==1.10.1
 django-crispy-forms==1.6.0
 Pillow==3.3.1
