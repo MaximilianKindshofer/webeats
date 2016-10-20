@@ -1,3 +1,20 @@
-{% for item in groceries %}
-    {{ item.name }} - {{ item.amount }} {{item.unit}}
-{% endfor %}
+{% extends '__base.html' %}
+{% block content %}
+<div class="container">
+    <h1 class="page-header">Here is your Grocerielist</h1>
+    <div class="well">
+        <p>Ok - it's not perfect. It gets upset by spelling mistakes.
+           It does not know that an eggplant can also be an aubergine. And unit conversion
+           well thats something for later.
+        </p>
+    </div>
+    <ul>
+    {% for key, item in groceries.items %}
+        <li>
+        {{ item.name }} - {{ item.amount }} {{item.unit}}
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+

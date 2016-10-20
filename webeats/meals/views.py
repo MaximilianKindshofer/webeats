@@ -120,17 +120,16 @@ def wrap_up(request):
         groceries_dict = {} 
         for ingredient in ingredients:
             for item in ingredient:
-                if item.pk not in groceries_dict.keys(): 
-                    groceries_dict[item.pk] = 1
+                if item.name not in groceries_dict.keys(): 
+                    groceries_dict[item.name] = item
                 else:
-                    groceries_dict[item.pk] += 1
-        groceries_list = []
-        for key, value in groceries_dict.items():
-            ingredient = Ingredient.objects.get(pk=key)
-            ingredient.amount = ingredient.amount * value
-            groceries_list.append(ingredient)
+                    dict_item = groceries_dict[item.name]
+                    if dict_item.unit == item.unit:
+                        groceries_dict[item.name].amount += item.amount
+                    else:
+                        groceries_dict["{} - {}".format(item.name, item.unit)] = item
         context = {
-                'groceries': groceries_list
+                'groceries': groceries_dict
                 }
     return render(request, 'meals/wrap_up.html', context)
 
