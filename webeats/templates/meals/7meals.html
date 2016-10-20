@@ -9,7 +9,7 @@
                 <form method='POST' action="{% url 'meals:wrap_up' %}">
                     {% csrf_token %}
                     <input type="hidden" name='meals_pk'
-                           value="{% for meal in meals %}{{meal.pk}},{% endfor %}">
+                           value="{% for meal in meals %}{{meal.pk}}{% endfor %}">
                 
                     <input type="submit" class='btn btn-link' value='Wrap it up'</a>
           </div>

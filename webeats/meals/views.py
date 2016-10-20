@@ -104,5 +104,25 @@ def ingredient_update(request, pk):
 
 def wrap_up(request):
     if request.POST:
-        for pk in request.get('meals_pk')
-    return render(request, 'meals/wrap_up.html')
+        ingredients = []
+        meal_pk_string = request.POST.get('meals_pk', default=None)
+        for pk in meal_pk_string:
+            meal = models.Dish.objects.get(pk=pk)
+            ingredients.append(meal.ingredient_set.all())
+        groceries_dict = {} 
+        for ingredient in ingredients:
+            for item in ingredient:
+                if item.pk not in groceries_dict.keys(): 
+                    groceries_dict[item.pk] = 1
+                else:
+                    groceries_dict[item.pk] += 1
+        groceries_list = []
+        for key, value in groceries_dict.items():
+            ingredient = Ingredient.objects.get(pk=key)
+            ingredient.amount = ingredient.amount * value
+            groceries_list.append(ingredient)
+        context = {
+                'groceries': groceries_list
+                }
+    return render(request, 'meals/wrap_up.html', context)
+

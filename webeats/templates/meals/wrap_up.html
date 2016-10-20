@@ -1,1 +1,3 @@
-{{request.POST}}
+{% for item in groceries %}
+    {{ item.name }} - {{ item.amount }} {{item.unit}}
+{% endfor %}
