@@ -13,7 +13,21 @@
                 {% endif %}
             </div>
             <div class="col-md-6"> 
-                <h1>{{dish.name}}<small> - <a href="{% url 'meals:dish_update' dish.id %}">Edit</a></small></h1>
+                <h1>{{dish.name}} 
+                    <small>
+                        {% if dish not in request.user.user_extend.get_favourites %}
+                        <a href={% url 'profiles:fav_toggle' dish.pk %} class="unfav">
+                        <span class="glyphicon glyphicon-star-empty"
+                            aria-hidden="true"></span></a>
+                        {% else %}
+                        <a href={% url 'profiles:fav_toggle' dish.pk %} class="fav">
+                        <span class="glyphicon glyphicon-star"
+                            aria-hidden="true"></span></a>
+                        {% endif %}
+                        - 
+                        <a href="{% url 'meals:dish_update' dish.id %}">Edit</a>
+                    </small>
+                </h1>
                 <div id="recipe"></div>
                 <script>
                     document.getElementById('recipe').innerHTML =
