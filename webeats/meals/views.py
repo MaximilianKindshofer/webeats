@@ -76,8 +76,10 @@ def dish_update(request, pk):
         dish_form = forms.DishForm(request.POST)
         if dish_form.is_valid():
             dish_unsaved = dish_form.save(commit=False)
-            dish_unsaved.author = request.user
-            dish_unsaved.save()
+            dish.name = dish_unsaved.name
+            dish.picture = dish_unsaved.picture
+            dish.author = request.user
+            dish.save()
             return redirect('meals:dish_detail', dish.pk)
         else:
             print(dish_form.errors)
@@ -96,8 +98,10 @@ def ingredient_update(request, pk):
     if request.POST:
         ingredient_form = forms.IngredientForm(request.POST)
         ingredient_unsaved = ingredient_form.save(commit=False)
-        ingredient_unsaved.dish = ingredient.dish
-        ingredient_unsaved.save()
+        ingredient.name = ingredient_unsaved.name
+        ingredient.amount = ingredient_unsaved.amount
+        ingredient.unit = ingredient_unsaved.unit
+        ingredient.save()
         return redirect('meals:dish_detail', ingredient.dish.pk)
 
     context = {'ingredient':ingredient, 'ingredient_form': ingredient_form}
