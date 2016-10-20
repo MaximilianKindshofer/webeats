@@ -85,5 +85,7 @@ ENV/
 # Spyder project settings
 .spyderproject
 
+#vim 
+*.swp
 # Rope project settings
 .ropeproject
