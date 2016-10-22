@@ -38,5 +38,6 @@ def get_token(request):
         #use the code and get the token, than save it at the profile
     else:
         redirect_url = 'https://bithive.space/profiles/get_token'
-        redirect(get_authorization_url(client_id,redirect_url,state))
+        return redirect(get_authorization_url(client_id,redirect_url,state))
+    
 
