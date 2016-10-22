@@ -7,7 +7,7 @@ from .models import Favourite
 from .secret import client_id
 from django.views.decorators.csrf import csrf_exempt
 import random
-from .wunderlist_utils import get_authorization_url
+from .wunderlist_utils import get_authorization_url, make_api_call
 def register(request):
 
     form = RegisterForm(request.POST or None)
@@ -30,14 +30,22 @@ def fav_toggle(request, pk):
         fav.delete()
     return redirect('meals:dish_detail', dish.pk)
 
-@csrf_exempt
-def get_token(request):
+def request_token(request):
     state = random.randint(1,100)
-    if request.POST:
-        pass
-        #use the code and get the token, than save it at the profile
-    else:
-        redirect_url = 'https://bithive.space/profiles/get_token'
-        return redirect(get_authorization_url(client_id,redirect_url,state))
+    user = request.user.user_extend
+    user.state = state
+    user.save()
+    redirect_url = 'https://bithive.space/profiles/get_token'
+    return redirect(get_authorization_url(client_id,redirect_url,state))
     
+def get_token(request):
+
+    state = request.GET.get('state')
+    if state != request.user.user_extend.state:
+        raise SuspiciousOperation
+    else:
+        code = request.GET.get('code')
+        token = make_api_call(code)
+        return render(request, 'profiles/test.html', {'test': token})
+        
 

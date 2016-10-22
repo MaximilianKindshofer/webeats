@@ -1,4 +1,5 @@
 gunicorn
+requests
 Django
 django-crispy-forms
 Pillow

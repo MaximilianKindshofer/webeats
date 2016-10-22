@@ -6,6 +6,7 @@ from meals.models import Dish
 class User_extend(models.Model):
 
     user = models.OneToOneField(User)
+    state = models.IntegerField(null=True)
     wunderlist_token = models.CharField(max_length=300, blank=True, null=True)
 
     def get_favourites(self):
