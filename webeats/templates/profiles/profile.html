@@ -3,7 +3,7 @@
 <div class="container">
     <h1 class="page-header">Your Profile</h1>
     <p>{{user.username}}</p>
-    <p>Wunderlist integration: {% if user.user_extend.wonderlist_token %}
+    <p>Wunderlist integration: {% if user.user_extend.wunderlist_token %}
     active {% else %} <a href="{% url 'profiles:request_token' %}">click to activate </a> {% endif %}
     </p>
 {% endblock %}
