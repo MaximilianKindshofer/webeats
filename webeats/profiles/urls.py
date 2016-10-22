@@ -8,4 +8,7 @@ urlpatterns = [
     url(r'^register/$',
         views.register,
         name="register",),
+    url(r'^get_token/$',
+        views.get_token,
+        name="get_token",),
         ]

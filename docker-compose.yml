@@ -1,3 +1,9 @@
+postgres:
+    restart: always
+    image: postgres:latest
+    volumes:
+        - pgdata:/var/lib/postgresql/data
+
 webeats:
     restart: always
     build: ./webeats
@@ -9,8 +15,4 @@ webeats:
     volumes:
         - /var/www/static/:/static
 
-postgres:
-    restart: always
-    image: postgres:latest
-    volumes:
-        - pgdata:/var/lib/postgresql/data
+

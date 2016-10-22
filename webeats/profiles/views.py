@@ -4,6 +4,9 @@ from .forms import RegisterForm
 from .models import User_extend
 from meals.models import Dish
 from .models import Favourite
+from .secret import client_id
+from django.views.decorators.csrf import csrf_exempt
+import random
 
 def register(request):
 
@@ -26,3 +29,14 @@ def fav_toggle(request, pk):
         fav = Favourite.objects.filter(user=request.user.user_extend).get(dish=dish)
         fav.delete()
     return redirect('meals:dish_detail', dish.pk)
+
+@csrf_exempt
+def get_token(request):
+    state = random.randint(1,100)
+    if request.POST:
+        pass
+        #use the code and get the token, than save it at the profile
+    else:
+        redirect_url = 'https://bithive.space/profiles/get_token'
+        authorization_url(client_id,redirect_url,state)
+

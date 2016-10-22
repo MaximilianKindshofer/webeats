@@ -80,8 +80,6 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'HOST': 'db',
-        'PORT': 5432,
     }
 }
 
@@ -132,3 +130,4 @@ STATIC_DIRS = [
         '/static/'	
 ]
 STATIC_ROOT = '/static/'
+LOGIN_URL = '/login/'

@@ -6,6 +6,7 @@ from meals.models import Dish
 class User_extend(models.Model):
 
     user = models.OneToOneField(User)
+    wunderlist_token = models.CharField(max_length=300, blank=True, null=True)
 
     def get_favourites(self):
         return [fav.dish for fav in self.user.user_extend.favourite_set.all()]
