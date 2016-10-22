@@ -44,7 +44,7 @@ def get_token(request):
 
     state = request.GET.get('state')
     if state != request.user.user_extend.state:
-        raise SuspiciousOperation
+        raise SuspiciousOperation("Local State: {} not matching with request State {}".format(request.user.user_extend.state, state))
     else:
         code = request.GET.get('code')
         token = make_api_call(code)
