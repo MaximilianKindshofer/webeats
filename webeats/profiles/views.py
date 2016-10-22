@@ -7,7 +7,7 @@ from .models import Favourite
 from .secret import client_id
 from django.views.decorators.csrf import csrf_exempt
 import random
-from wunderlist_utils import get_authorization_url
+from .wunderlist_utils import get_authorization_url
 def register(request):
 
     form = RegisterForm(request.POST or None)
