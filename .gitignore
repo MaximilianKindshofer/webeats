@@ -89,3 +89,5 @@ ENV/
 *.swp
 # Rope project settings
 .ropeproject
+
+secret.py
