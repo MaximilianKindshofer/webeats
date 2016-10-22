@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Lato|Lato');
+
+
 /*!
  * Default theme for Pingendo 
  * Homepage: http://pingendo.com  
@@ -24,6 +25,13 @@ a.unfav {
 a.unfav:hover {
     color: #9a9a7a;
 }
+
+@font-face{
+    font-family:main-font;
+    src: url('../fonts/kingthings_exeter.ttf');
+
+}
+
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -1098,8 +1106,8 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: Lato;
-  font-size: 14px;
+  font-family: main-font;
+  font-size: 20px;
   line-height: 1.42857143;
   color: #000000;
   background-color: #ffffff;
@@ -1200,7 +1208,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: Lato;
+  font-family: main-font;
   font-weight: 500;
   line-height: 1.1;
   color: inherit;
@@ -5837,7 +5845,7 @@ button.close {
   position: absolute;
   z-index: 1070;
   display: block;
-  font-family: Lato;
+  font-family: main-font;
   font-size: 12px;
   font-weight: normal;
   line-height: 1.4;
@@ -5944,7 +5952,7 @@ button.close {
   display: none;
   max-width: 276px;
   padding: 1px;
-  font-family: Lato;
+  font-family: main-font;
   font-size: 14px;
   font-weight: normal;
   line-height: 1.42857143;

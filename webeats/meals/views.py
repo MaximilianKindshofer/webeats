@@ -3,6 +3,7 @@ from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse
 from django.forms import formset_factory, modelformset_factory
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 from . import forms
 from . import models
@@ -55,7 +56,12 @@ def seven_meals(request):
 
     count = models.Dish.objects.all().count()
     dish = []
-    fav_dish = request.user.user_extend.get_favourites()
+    if count == 0:
+        return render(request, 'meals/nomeals.html')
+    try:
+        fav_dish = request.user.user_extend.get_favourites()
+    except ObjectDoesNotExist:
+        fav_dish = []
     while len(dish) < 7:
         random_number = random.randrange(1, count+1)
         try:
