@@ -7,7 +7,7 @@ from .models import Favourite
 from .secret import client_id
 from django.views.decorators.csrf import csrf_exempt
 import random
-
+from wunderlist_utils import get_authorization_url
 def register(request):
 
     form = RegisterForm(request.POST or None)
@@ -38,5 +38,5 @@ def get_token(request):
         #use the code and get the token, than save it at the profile
     else:
         redirect_url = 'https://bithive.space/profiles/get_token'
-        authorization_url(client_id,redirect_url,state)
+        redirect(get_authorization_url(client_id,redirect_url,state))
 
