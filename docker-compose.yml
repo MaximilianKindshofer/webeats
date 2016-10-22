@@ -10,7 +10,7 @@ webeats:
     links:
         - postgres:db
     ports:
-        - "8000:8000"
+        - "7654:8000"
     command: /usr/src/app/start.sh
     volumes:
         - /var/www/static/:/static
