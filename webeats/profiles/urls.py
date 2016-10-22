@@ -15,7 +15,7 @@ urlpatterns = [
         views.get_token,
         name="get_token",),
     url(r'^profile/$',
-        views.profle,
+        views.profile,
         name="profile",),
         ]
 
