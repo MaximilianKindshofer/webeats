@@ -5,4 +5,7 @@ urlpatterns = [
     url(r'^fav_toggle/(?P<pk>[\d]+)/$',
         views.fav_toggle,
         name="fav_toggle",),
+    url(r'^register/$',
+        views.register,
+        name="register",),
         ]

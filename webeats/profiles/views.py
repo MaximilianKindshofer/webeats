@@ -1,6 +1,20 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.models import User
+from .forms import RegisterForm
+from .models import User_extend
 from meals.models import Dish
 from .models import Favourite
+
+def register(request):
+
+    form = RegisterForm(request.POST or None)
+    if form.is_valid():
+        user = form.save()
+        user.set_password(user.password)
+        user.save()
+        User_extend.objects.create(user=user)
+        return redirect('login')
+    return render(request, 'profiles/registration.html', { 'form': form })
 
 def fav_toggle(request, pk):
 
