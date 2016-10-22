@@ -32,6 +32,10 @@ def fav_toggle(request, pk):
         fav.delete()
     return redirect('meals:dish_detail', dish.pk)
 
+def profile(request):
+    user = request.user
+    return render(request, 'profiles/profile.html', { 'user': user })
+
 def request_token(request):
     state = random.randint(1,100)
     user = request.user.user_extend
