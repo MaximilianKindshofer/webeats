@@ -42,12 +42,14 @@ def request_token(request):
     
 def get_token(request):
 
+    user_extend = request.user.user_extend
     state = request.GET.get('state')
-    if int(state) != request.user.user_extend.state:
+    if int(state) != user_extend.state:
         raise SuspiciousOperation("Local State: {} not matching with request State {}".format(request.user.user_extend.state, state))
     else:
         code = request.GET.get('code')
         token = make_api_call(code)
-        return render(request, 'profiles/test.html', {'test': token})
-        
+        user_extend.wunderlist_token = token
+        user_extend.save()
+        return redirect('index') 
 

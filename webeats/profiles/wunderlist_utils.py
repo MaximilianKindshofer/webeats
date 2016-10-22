@@ -15,7 +15,6 @@ def make_api_call(code):
 
     wunderlist_token_url = 'https://www.wunderlist.com/oauth/access_token'
     r = requests.post(wunderlist_token_url, data=post_data)
-    json_response = r.json()
-    response = json.loads(json_response)
+    response = r.json()
     token = response['access_token']
     return token
