@@ -78,7 +78,7 @@ def seven_meals(request):
             dish = dish + random_dishes
         else:
             while len(dish) < 7:
-                random_number = random.randint(1,count)
+                random_number = random.randint(0,count-1)
                 dishes = list(dishes)
                 dish.append(dishes[random_number])
 
