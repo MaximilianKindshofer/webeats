@@ -70,7 +70,7 @@ def seven_meals(request):
         if len(fav_dish) == 0:
             pass
         else:
-            random_fav = random.sample(fav_dish, len(fav_dish)
+            random_fav = random.sample(fav_dish, len(fav_dish))
             dish = random_fav
         missing_dishes = 7 - len(dish)
         random_dishes = random.sample(dishes, missing_dishes)
