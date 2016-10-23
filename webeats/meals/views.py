@@ -53,7 +53,6 @@ def dish_detail(request, pk):
     context = {'dish': dish}
     return render(request, 'meals/dish.html', context)
 
-@transaction.atomic
 def seven_meals(request):
 
     count = models.Dish.objects.all().count()
