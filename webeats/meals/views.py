@@ -169,8 +169,8 @@ def to_wunderlist(request):
               'X-Access-Token': request.user.user_extend.wunderlist_token,
               'X-Client-ID': client_id,
               'Accept': 'application/json'}
-    create_list_url = 'a.wunderlist.com/api/v1/lists'
-    create_task_url = 'a.wunderlist.com/api/v1/tasks'
+    create_list_url = 'https://a.wunderlist.com/api/v1/lists'
+    create_task_url = 'https://a.wunderlist.com/api/v1/tasks'
     create_list_data = {'title': 'Groceries'} 
 
     response = requests.post(create_list_url, headers=headers, data=create_list_data)
