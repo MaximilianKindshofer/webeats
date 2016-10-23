@@ -55,7 +55,8 @@ def dish_detail(request, pk):
 
 def seven_meals(request):
 
-    count = models.Dish.objects.all().count()
+    dishes = models.Dish.objects.all().count()
+    count = dishes.count()
     dish = []
     if count == 0:
         return render(request, 'meals/nomeals.html')
@@ -63,17 +64,25 @@ def seven_meals(request):
         fav_dish = request.user.user_extend.get_favourites()
     except ObjectDoesNotExist:
         fav_dish = []
-    while len(dish) < 7:
-        random_number = random.randrange(1, count+1)
-        try:
-            random_fav = random.randrange(0,len(fav_dish))
-            dish.append(fav_dish[random_fav])
-            del fav_dish[random_fav]
-        except ValueError:
-            try:
-                dish.append(models.Dish.objects.get(pk=random_number))
-            except models.Dish.DoesNotExist:
-                pass
+    if len(fav_dish) > 7:
+        random_fav = random.sample(fav_dish, 7)
+        dish = random_fav
+    else:
+        if len(fav_dish) == 0:
+            pass
+        else:
+            random_fav = random.sample(fav_dish, len(fav_dish)
+            dish = random_fav
+        missing_dishes = 7 - len(dish)
+        random_dishes = random.sample(dishes, missing_dishes)
+        if count > missing_dishes:
+            dish = dish + random_dishes
+        else:
+            while len(dish) < 7:
+                random_number = random.randint(1,len(random_dishes))
+                dish.append(random_dish[random_number])
+            
+                
 
     contex = {'meals': dish}
     return render(request, 'meals/7meals.html', contex)
