@@ -142,7 +142,8 @@ def get_groceries_dict(meal_pk_string):
             else:
                 dict_item = groceries_dict[item.name]
                 if dict_item.unit == item.unit:
-                    groceries_dict[item.name].amount += item.amount                    else:
+                    groceries_dict[item.name].amount += item.amount
+                else:
                     groceries_dict["{} - {}".format(item.name, item.unit)] = item
     return groceries_dict
 
