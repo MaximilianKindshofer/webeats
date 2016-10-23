@@ -6,7 +6,11 @@
    <div class='container'>
         <div class='row'>
             <div class='col-md-6'>
-                <img src="{{ ingredient.dish.picture.url }}" class="img-responsive" style="max-width:500px; max-height:500px"/>
+                {% if ingredient.dish.picture %}
+                    <img src="{{ ingredient.dish.picture.url }}" class="img-responsive" style="max-width:500px; max-height:500px"/>
+                {% else %}
+                    <img src="{% static 'img/placeholder.jpg' %}" class="img-responsive" style="max-width:360;max-height:270;">
+                 {% endif %}
             </div>
             <div class='col-md-6'>
                 <h1> {{ingredient.dish.name }} </h1>
