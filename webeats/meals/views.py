@@ -131,7 +131,7 @@ class DeleteIngredient(DeleteView):
 def get_groceries_dict(meal_pk_string):
 
     ingredients = []
-    for pk in meal_pk_string:
+    for pk in meal_pk_string.split(','):
         meal = models.Dish.objects.get(pk=pk)
         ingredients.append(meal.ingredient_set.all())
         groceries_dict = {} 
