@@ -73,15 +73,14 @@ def seven_meals(request):
             random_fav = random.sample(fav_dish, len(fav_dish))
             dish = random_fav
         missing_dishes = 7 - len(dish)
-        random_dishes = random.sample(list(dishes), missing_dishes)
         if count > missing_dishes:
+            random_dishes = random.sample(list(dishes), missing_dishes)
             dish = dish + random_dishes
         else:
             while len(dish) < 7:
-                random_number = random.randint(1,len(random_dishes))
-                dish.append(random_dish[random_number])
-            
-                
+                random_number = random.randint(1,count)
+                dishes = list(dishes)
+                dish.append(dishes[random_number])
 
     contex = {'meals': dish}
     return render(request, 'meals/7meals.html', contex)
