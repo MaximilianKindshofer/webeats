@@ -183,5 +183,5 @@ def to_wunderlist(request):
         create_task_data = {'list_id': list_id,
                             'title': "{} - {}".format(value.name, value.amount)
                             }
-        response = requests.post(create_task_url, headers=headers, json=create_task)
+        response = requests.post(create_task_url, headers=headers, json=create_task_data)
     return redirect('index')
