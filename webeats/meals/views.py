@@ -90,7 +90,7 @@ def dish_update(request, pk):
             dish_unsaved = dish_form.save(commit=False)
             dish.name = dish_unsaved.name
             dish.picture = dish_unsaved.picture
-            dish.author = request.user
+            dish.author = request.user.username
             dish.save()
             return redirect('meals:dish_detail', dish.pk)
         else:
