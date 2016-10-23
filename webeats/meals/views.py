@@ -161,7 +161,7 @@ def to_wunderlist(request):
 
     if request.POST:
         meal_pk_string = request.POST.get('meals_pk', default=None)
-        groceries_dict = get_griceries_dict(meal_pk_string)
+        groceries_dict = get_groceries_dict(meal_pk_string)
     else:
         return redirect('index')
 
