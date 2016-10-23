@@ -135,16 +135,15 @@ def get_groceries_dict(meal_pk_string):
         meal = models.Dish.objects.get(pk=pk)
         ingredients.append(meal.ingredient_set.all())
         groceries_dict = {} 
-        for ingredient in ingredients:
-            for item in ingredient:
-                if item.name not in groceries_dict.keys(): 
-                    groceries_dict[item.name] = item
-                else:
-                    dict_item = groceries_dict[item.name]
-                    if dict_item.unit == item.unit:
-                        groceries_dict[item.name].amount += item.amount
-                    else:
-                        groceries_dict["{} - {}".format(item.name, item.unit)] = item
+    for ingredient in ingredients:
+        for item in ingredient:
+            if item.name not in groceries_dict.keys(): 
+                groceries_dict[item.name] = item
+            else:
+                dict_item = groceries_dict[item.name]
+                if dict_item.unit == item.unit:
+                    groceries_dict[item.name].amount += item.amount                    else:
+                    groceries_dict["{} - {}".format(item.name, item.unit)] = item
     return groceries_dict
 
 def wrap_up(request):
@@ -181,7 +180,7 @@ def to_wunderlist(request):
         response.raise_for_status()
     for key, value in groceries_dict.items():
         create_task_data = {'list_id': list_id,
-                            'title': "{} - {}".format(value.name, value.amount)
+                            'title': "{} - {} {}".format(value.name, value.amount, value.unit)
                             }
         response = requests.post(create_task_url, headers=headers, json=create_task_data)
     return redirect('index')
