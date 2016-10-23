@@ -31,5 +31,8 @@ urlpatterns = [
     url(r'^meals/wrap_up/$',
         views.wrap_up,
         name='wrap_up',),
+    url(r'^meals/to_wunderlist/$',
+        views.to_wunderlist,
+        name='to_wunderlist',),
 ]
 

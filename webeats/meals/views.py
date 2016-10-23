@@ -7,7 +7,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 from . import forms
 from . import models
+import requests
 import random
+from profiles.secret import client_id
 
 @login_required
 def add_dish(request):
@@ -124,13 +126,14 @@ class DeleteIngredient(DeleteView):
     def get_success_url(self):
         return reverse('meals:dish_detail', args=[self.object.dish.pk])
     
-def wrap_up(request):
-    if request.POST:
-        ingredients = []
-        meal_pk_string = request.POST.get('meals_pk', default=None)
-        for pk in meal_pk_string:
-            meal = models.Dish.objects.get(pk=pk)
-            ingredients.append(meal.ingredient_set.all())
+
+
+def get_groceries_dict(meal_pk_string):
+
+    ingredients = []
+    for pk in meal_pk_string:
+        meal = models.Dish.objects.get(pk=pk)
+        ingredients.append(meal.ingredient_set.all())
         groceries_dict = {} 
         for ingredient in ingredients:
             for item in ingredient:
@@ -142,8 +145,42 @@ def wrap_up(request):
                         groceries_dict[item.name].amount += item.amount
                     else:
                         groceries_dict["{} - {}".format(item.name, item.unit)] = item
+    return groceries_dict
+
+def wrap_up(request):
+    if request.POST:
+        meal_pk_string = request.POST.get('meals_pk', default=None)
+        groceries_dict = get_groceries_dict(meal_pk_string)
         context = {
-                'groceries': groceries_dict
+                'groceries': groceries_dict,
+                'meal_pk_string': meal_pk_string,
                 }
     return render(request, 'meals/wrap_up.html', context)
 
+def to_wunderlist(request):
+
+    if request.POST:
+        meal_pk_string = request.POST.get('meals_pk', default=None)
+        groceries_dict = get_griceries_dict(meal_pk_string)
+    else:
+        return redirect('index')
+
+    headers = {'User-Agent': 'Webeats',
+              'X-Access-Token': request.user.user_extend.wunderlist_token,
+              'X-Client-ID': client_id,
+              'Accept': 'application/json'}
+    create_list_url = 'a.wunderlist.com/api/v1/lists'
+    create_task_url = 'a.wunderlist.com/api/v1/tasks'
+    create_list_data = {'title': 'Groceries'} 
+
+    response = requests.post(create_list_url, headers=headers, data=create_list_data)
+    if response.status == '201':
+        list_response = response.json()
+        list_id = list_response['id']
+
+    for key, value in groceries_dict.items():
+        create_task_data = {'list_id': list_id,
+                            'title': "{} - {}".format(value.name, value.amount)
+                            }
+        response = requests.post(create_task_url, headers=headers, data=create_task)
+    return redirect('index')
