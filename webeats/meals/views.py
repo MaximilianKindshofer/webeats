@@ -55,7 +55,7 @@ def dish_detail(request, pk):
 
 def seven_meals(request):
 
-    dishes = models.Dish.objects.all().count()
+    dishes = models.Dish.objects.all()
     count = dishes.count()
     if count == 0:
         return render(request, 'meals/nomeals.html')
