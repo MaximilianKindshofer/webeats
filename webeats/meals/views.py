@@ -57,7 +57,6 @@ def seven_meals(request):
 
     dishes = models.Dish.objects.all().count()
     count = dishes.count()
-    dish = []
     if count == 0:
         return render(request, 'meals/nomeals.html')
     try:
