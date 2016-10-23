@@ -174,10 +174,11 @@ def to_wunderlist(request):
     create_list_data = {'title': 'Groceries'} 
 
     response = requests.post(create_list_url, headers=headers, json=create_list_data)
-    if response.status_code == '201':
+    if response.status_code == 201:
         list_response = response.json()
         list_id = list_response['id']
-
+    else:
+        response.raise_for_status()
     for key, value in groceries_dict.items():
         create_task_data = {'list_id': list_id,
                             'title': "{} - {}".format(value.name, value.amount)
