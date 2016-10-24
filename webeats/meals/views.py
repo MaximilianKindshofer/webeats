@@ -61,8 +61,9 @@ def seven_meals(request):
         return render(request, 'meals/nomeals.html')
     try:
         fav_dish = request.user.user_extend.get_favourites()
-    except ObjectDoesNotExist:
+    except (ObjectDoesNotExist, AttributeError):
         fav_dish = []
+
     if len(fav_dish) > 7:
         random_fav = random.sample(fav_dish, 7)
         dish = random_fav
